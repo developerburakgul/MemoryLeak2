@@ -12,7 +12,7 @@ class ViewController2: UIViewController {
     private enum SelectedCityType {
         case from,to
     }
-    let vc = DetailViewController2()
+    var detailViewController2: DetailViewController2?
     
     private var selectedCityType: SelectedCityType?
     
@@ -129,16 +129,17 @@ class ViewController2: UIViewController {
     }
     
     @objc func clickFromCityButton(){
-        
-        vc.delegate = self
+        detailViewController2 = DetailViewController2()
+        detailViewController2?.delegate = self
         selectedCityType = .from
-        self.present(vc, animated: true)
+        self.present(detailViewController2!, animated: true)
     }
     
     @objc func clickToCityButton(){
-        vc.delegate = self
+        detailViewController2 = DetailViewController2()
+        detailViewController2?.delegate = self
         selectedCityType = .to
-        self.present(vc, animated: true)
+        self.present(detailViewController2!, animated: true)
     }
     
     @objc func clickDismissButton(){

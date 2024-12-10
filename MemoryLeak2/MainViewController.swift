@@ -66,15 +66,15 @@ class MainViewController: UIViewController {
     }
     
     @objc func clickClosureButton() {
-        let closureViewController = ViewController()
-        closureViewController.modalPresentationStyle = .overFullScreen
-        self.present(closureViewController, animated: true)
+        let viewController = ViewController()
+        viewController.modalPresentationStyle = .overFullScreen
+        self.present(viewController, animated: true)
     }
     
     @objc func clickDelegateButton() {
-        let delegateViewController = ViewController2()
-        delegateViewController.modalPresentationStyle = .overFullScreen
-        self.present(delegateViewController, animated: true)
+        let viewController2 = ViewController2()
+        viewController2.modalPresentationStyle = .overFullScreen
+        self.present(viewController2, animated: true)
     }
 }
 
