@@ -41,6 +41,7 @@ class DetailViewController: UIViewController {
         view.backgroundColor = .systemBackground
         tableView.delegate = self
         tableView.dataSource = self
+        print("DetailViewController is inited")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,7 +67,7 @@ class DetailViewController: UIViewController {
     }
     
     deinit {
-        print("ClosureDetailViewController is deinited")
+        print("DetailViewController is deinited")
     }
 }
 
@@ -92,7 +93,7 @@ extension DetailViewController: UITableViewDelegate {
 }
 
 
-#Preview("ClosureDetailViewController"){
+#Preview("DetailViewController"){
     var vc = DetailViewController()
     return vc
 }
