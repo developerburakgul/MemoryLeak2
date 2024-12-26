@@ -17,9 +17,17 @@ class MainViewController: UIViewController {
         button.setTitleColor(.label, for: .normal)
         return button
     }()
+    
     private var delegateButton: UIButton = {
         var button = UIButton()
         button.setTitle("Delegate", for: .normal)
+        button.setTitleColor(.label, for: .normal)
+        return button
+    }()
+    
+    private var notificationCenterButton: UIButton = {
+        var button = UIButton()
+        button.setTitle("Notification Center", for: .normal)
         button.setTitleColor(.label, for: .normal)
         return button
     }()
@@ -35,11 +43,13 @@ class MainViewController: UIViewController {
         setupConstraints()
         closureButton.addTarget(self, action: #selector(clickClosureButton), for: .touchUpInside)
         delegateButton.addTarget(self, action: #selector(clickDelegateButton), for: .touchUpInside)
+        notificationCenterButton.addTarget(self, action: #selector(clickNotificationCenterButton), for: .touchUpInside)
     }
     
     private func setupConstraints() {
         setupClosureButtonConstraint()
         setupDelegateButtonConstraint()
+        setupNotificationCenterButtonConstraint()
     }
     
     private func setupClosureButtonConstraint() {
@@ -53,6 +63,7 @@ class MainViewController: UIViewController {
             closureButton.heightAnchor.constraint(equalToConstant: 100)
         ])
     }
+    
     private func setupDelegateButtonConstraint() {
         view.addSubview(delegateButton)
         delegateButton.translatesAutoresizingMaskIntoConstraints = false
@@ -62,6 +73,18 @@ class MainViewController: UIViewController {
             delegateButton.topAnchor.constraint(equalTo: closureButton.bottomAnchor, constant: 100),
             delegateButton.widthAnchor.constraint(equalToConstant: 200),
             delegateButton.heightAnchor.constraint(equalToConstant: 100)
+        ])
+    }
+    
+    private func setupNotificationCenterButtonConstraint() {
+        view.addSubview(notificationCenterButton)
+        notificationCenterButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            notificationCenterButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            notificationCenterButton.topAnchor.constraint(equalTo: delegateButton.bottomAnchor, constant: 100),
+            notificationCenterButton.widthAnchor.constraint(equalToConstant: 200),
+            notificationCenterButton.heightAnchor.constraint(equalToConstant: 100)
         ])
     }
     
@@ -76,9 +99,15 @@ class MainViewController: UIViewController {
         viewController2.modalPresentationStyle = .overFullScreen
         self.present(viewController2, animated: true)
     }
+    
+    @objc func clickNotificationCenterButton() {
+        let viewController3 = ViewController3()
+        viewController3.modalPresentationStyle = .overFullScreen
+        self.present(viewController3, animated: true)
+    }
 }
 
-#Preview {
+#Preview("MainViewController"){
     let vc = MainViewController()
     return vc
 }

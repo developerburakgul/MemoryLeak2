@@ -1,15 +1,18 @@
 //
-//  DelegateViewController.swift
+//  ViewController3.swift
 //  MemoryLeak2
 //
-//  Created by Burak Gül on 9.12.2024.
+//  Created by Burak Gül on 25.12.2024.
 //
+
 
 import UIKit
 
-class ViewController2: UIViewController {
+class ViewController3: UIViewController {
     
-    var detailViewController2: DetailViewController2?
+    var detailViewController3: DetailViewController3?
+    
+    var observer: NSObjectProtocol?
     
     //MARK: - UI Elements
     private var fromLabel: UILabel = {
@@ -87,17 +90,43 @@ class ViewController2: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         setup()
-        print("ViewController2 is inited")
+       
+        
+        print("ViewController3 is inited")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        observer = NotificationCenter.default.addObserver(forName: .notificationCenterExample, object: nil, queue: OperationQueue.main, using: { notification in
+//            let dvc3 = notification.object as! DetailViewController3
+//            
+//            self.fromLabel.text = dvc3.selectedCity
+            
+            guard let userInfo = notification.userInfo else { return }
+            if let selectedCity = userInfo["selectedCity"]{
+                self.fromLabel.text = selectedCity as? String
+            }
+            
+            
+            
+            
+        })
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+//        if let notificationCenter = observer {
+//            NotificationCenter.default.removeObserver(notificationCenter)
+//        }
+    }
+    
     @objc func clickFromCityButton(){
-        detailViewController2 = DetailViewController2()
-        detailViewController2?.delegate = self
-        self.present(detailViewController2!, animated: true)
+        detailViewController3 = DetailViewController3()
+        self.present(detailViewController3!, animated: true)
     }
         
     @objc func clickDismissButton(){
@@ -105,14 +134,7 @@ class ViewController2: UIViewController {
     }
     
     deinit {
-        print("ViewController 2 is deinited")
-    }
-}
-
-extension ViewController2: DetailViewController2Protocol {
-    
-    func didSelect(city: String) {
-        fromCityButton.setTitle(city, for: .normal)
+        print("ViewController 3 is deinited")
     }
 }
 
@@ -120,8 +142,10 @@ extension ViewController2: DetailViewController2Protocol {
     let vc = MainViewController()
     return vc
 }
-#Preview("ViewController2"){
-    var vc = ViewController2()
+
+#Preview("ViewController3"){
+    var vc = ViewController3()
     return vc
 }
+
 

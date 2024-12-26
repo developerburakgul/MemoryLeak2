@@ -1,19 +1,21 @@
 //
-//  DetailViewController2.swift
+//  DetailViewController3.swift
 //  MemoryLeak2
 //
-//  Created by Burak Gül on 9.12.2024.
+//  Created by Burak Gül on 26.12.2024.
 //
+
+
 
 import UIKit
 
-protocol DetailViewController2Protocol {
-    func didSelect(city: String)
+extension Notification.Name {
+    static let notificationCenterExample = Notification.Name("notificationCenterExample")
 }
 
-class DetailViewController2: UIViewController {
+class DetailViewController3: UIViewController {
     
-    var delegate: DetailViewController2Protocol?
+    var selectedCity: String?
     
     var data: [String] = [
         "İstanbul",
@@ -37,6 +39,7 @@ class DetailViewController2: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
+    
     //MARK: - Lifecycle Methods
     
     override func viewDidLoad() {
@@ -44,7 +47,8 @@ class DetailViewController2: UIViewController {
         view.backgroundColor = .systemBackground
         tableView.delegate = self
         tableView.dataSource = self
-        print("DetailViewController 2 is inited")
+        print("DetailViewController 3 is inited")
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -68,13 +72,19 @@ class DetailViewController2: UIViewController {
         ])
     }
     
+    
+    func postNotification(_ userInfo: [String: Any]){
+        
+//        NotificationCenter.default.post(name: .notificationCenterExample, object: self)
+        NotificationCenter.default.post(name: .notificationCenterExample, object: self, userInfo: userInfo)
+    }
     deinit {
-        print("DetailViewController2 is deinited")
+        print("DetailViewController3 is deinited")
     }
 }
 
 //MARK: - TableView Protocols
-extension DetailViewController2: UITableViewDataSource {
+extension DetailViewController3: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         data.count
@@ -88,11 +98,14 @@ extension DetailViewController2: UITableViewDataSource {
         return cell
     }
 }
-extension DetailViewController2: UITableViewDelegate {
+    
+extension DetailViewController3: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let city = data[indexPath.item]
-        delegate?.didSelect(city: city)
+        selectedCity = city
+        let userInfo = ["selectedCity": city]
+        postNotification(userInfo)
         self.dismiss(animated: true)
     }
 }
@@ -102,9 +115,10 @@ extension DetailViewController2: UITableViewDelegate {
     return vc
 }
 
-#Preview("DetailViewController"){
-    var vc = DetailViewController2()
+#Preview("DetailViewController3"){
+    var vc = DetailViewController3()
     return vc
 }
+
 
 
